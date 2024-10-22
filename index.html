@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Calculator</title>
+        <meta charset="utf-8">
+        <link rel="icon" href="images/icon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+        <style>
+            html {
+                height: 100%;
+                font-family: 'Oxanium';
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            body * {
+                font-family: inherit;
+            }
+
+            body::before {
+                content: '';
+                background-image: url('images/math.jpg');
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                filter: blur(10px);
+                z-index: 0;
+                scale: 1.1;
+            }
+
+            body {
+                overflow: hidden;
+            }
+
+            .main {
+                position: relative;
+                text-align: center;
+                background-color: palegoldenrod;
+                padding: 30px;
+                border: 5px solid yellowgreen;
+                border-radius: 30px;
+                z-index: 1;
+            }
+
+            .main > :first-child {
+                margin-top: 0;
+            }
+
+            .main > :last-child {
+                margin-bottom: 0;
+            }
+
+            input[type='number'] {
+                width: 110px;
+            }
+
+            .result {
+                padding: 5px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <h1>Calculator</h1>
+            <p>Welcome to our calculator! Enter your values:</p>
+            <input type="number" required placeholder="First number" class="firstNumber">
+            <select name="operator" class="operator">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </select>
+            <input type="number" required placeholder="Second number" class="secondNumber">
+            <input type="submit" value="Calculate">
+        </div>
+        <script>
+function handler() {
+    const inputs = document.querySelectorAll('input[type="number"]');
+    const firstNumberElement = inputs[0];
+    const operator = document.querySelector('.operator').value;
+    const secondNumberElement = inputs[1];
+    let result;
+
+    let resultElement = document.querySelector('.result');
+    if (!resultElement) {
+        resultElement = document.createElement('p');
+        resultElement.className = 'result';
+        const main = document.querySelector('div');
+        main.appendChild(resultElement);
+    }
+
+    firstNumberString = firstNumberElement.value;
+    secondNumberString = secondNumberElement.value;
+    if (!firstNumberElement.value || !secondNumberString) {
+        resultElement.style.backgroundColor = 'red';
+        resultElement.textContent = 'Operands should not be blank!';
+        if (!firstNumberString) {
+            firstNumberElement.style.border = '1px solid red';
+        } else {
+            firstNumberElement.style.border = '';
+        }
+        if (!secondNumberString) {
+            secondNumberElement.style.border = '1px solid red';
+        } else {
+            secondNumberElement.style.border = '';
+        }
+        return undefined;
+    }
+
+    firstNumber = Number(firstNumberString);
+    secondNumber = Number(secondNumberString);
+    switch (operator) {
+        case '+':
+            result = firstNumber + secondNumber;
+            break;
+        case '-':
+            result = firstNumber - secondNumber;
+            break;
+        case '*':
+            result = firstNumber * secondNumber;
+            break;
+        case "/":
+            result = firstNumber / secondNumber;
+    }
+
+    resultElement.style.backgroundColor = 'greenyellow';
+    inputs.forEach(element => element.style.border = '');
+    resultElement.textContent = `This equals to: ${result}`;
+}
+
+const button = document.querySelector('input[type="submit"]');
+button.addEventListener('click', handler);
+        </script>
+    </body>
+</html>
